@@ -6,7 +6,6 @@ export type Project = {
   problem: string
   solution: string
   tags: string[]
-  githubUrl: string
   liveUrl?: string
   accent: 'orange' | 'cyan'
   outcomes: string[]
@@ -21,7 +20,6 @@ export const projects: Project[] = [
     problem: 'When an AI agent produces a wrong answer, ordinary traces show what happened but leave teams debugging backward from the final response. The responsible step can be buried inside retrieval, planning, tool calls or synthesis.',
     solution: 'Black Box records each execution step, ranks likely causes from trace evidence and tests them through counterfactual replay. Its repair flow re-executes only affected steps, preserving trusted work and making the diagnosis inspectable.',
     tags: ['Python', 'FastAPI', 'React', 'Machine learning'],
-    githubUrl: 'https://github.com/Visqora/Blackbox',
     accent: 'orange',
     outcomes: ['Step-level execution traces', 'Evidence-backed failure diagnosis', 'Counterfactual replay and verified repair'],
   },
@@ -33,7 +31,6 @@ export const projects: Project[] = [
     problem: 'A routine lockfile update can introduce hundreds of transitive changes. Developers need to know what changed, how a package reaches their application and whether a release matches what their team approved.',
     solution: 'Provenyx analyses package-lock files without installing or running packages. It combines evidence-backed detection rules, dependency paths, OSV checks and release verification in a VS Code extension, web dashboard and pull-request trust gate.',
     tags: ['Next.js', 'FastAPI', 'VS Code', 'Solidity'],
-    githubUrl: 'https://github.com/Visqora/Provenyx',
     liveUrl: 'https://provenyx.vercel.app/',
     accent: 'cyan',
     outcomes: ['Safe lockfile analysis with explicit consent', 'Interactive dependency paths and evidence', 'Pull-request checks and release verification'],
