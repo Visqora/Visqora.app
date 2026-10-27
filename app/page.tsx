@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, BarChart3, Bot, GitBranch, Radar, Server, ShieldCheck, Smartphone, Workflow } from 'lucide-react'
+import { Hero } from '@/components/hero'
 import { CTA, SectionHeading, SiteShell } from '@/components/site'
 import { projects } from '@/lib/projects'
 
@@ -28,13 +29,7 @@ function ProductVisual({ product }: { product: (typeof projects)[number] }) {
 
 export default function Home() {
   return <SiteShell><main>
-    <section className="relative overflow-hidden bg-[#f7f9fc]">
-      <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(#9fb0d2_1px,transparent_1px)] [background-size:28px_28px]" />
-      <div className="relative mx-auto grid min-h-[620px] max-w-7xl items-center gap-10 px-5 py-16 lg:grid-cols-[1.1fr_.9fr] lg:px-8">
-        <div><p className="mb-6 text-xs font-bold uppercase tracking-[.24em] text-[#3b58ec]">Vision at the core</p><h1 className="max-w-3xl text-5xl font-extrabold leading-[1.06] text-[#0b1437] sm:text-7xl">We turn your business problems into <span className="text-[#3155df]">working technology.</span></h1><p className="mt-7 max-w-xl text-lg leading-8 text-[#5b6478]">Visqora designs and builds custom software, AI solutions and automations for growing businesses, from first conversation to launch and beyond.</p><div className="mt-9 flex flex-wrap gap-3"><Link href="/contact" className="rounded-full bg-[#3b58ec] px-6 py-3.5 text-sm font-bold text-white shadow-[0_12px_30px_rgba(59,88,236,.25)] transition hover:-translate-y-0.5">Book a free consultation <ArrowRight className="ml-2 inline h-4 w-4" /></Link><Link href="/work" className="rounded-full border border-[#cfd7e5] bg-white px-6 py-3.5 text-sm font-bold text-[#0b1437] transition hover:border-[#3b58ec]">Explore our products <ArrowUpRight className="ml-2 inline h-4 w-4" /></Link></div></div>
-        <div className="relative flex min-h-[340px] items-center justify-center lg:min-h-[470px]"><div className="absolute h-72 w-72 rounded-full border border-[#13b8e0]/25 sm:h-96 sm:w-96" /><div className="absolute h-56 w-56 rounded-full bg-[#13b8e0]/10 blur-3xl sm:h-72 sm:w-72" /><img src="/visqora-emblem.png" alt="Visqora eye and globe emblem" className="relative h-auto w-full max-w-[440px] object-contain drop-shadow-[0_28px_30px_rgba(16,45,108,.18)]" /></div>
-      </div>
-    </section>
+    <Hero />
 
     <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8"><SectionHeading eyebrow="Sound familiar?" title="The hard part is not always the technology." text="It is knowing what to change, where to start and who can own the outcome. That is where we come in." /><div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{problems.map((problem, index) => <div key={problem} className="group rounded-3xl border border-[#e4e9f2] bg-white p-6 transition hover:-translate-y-1 hover:border-[#13b8e0] hover:shadow-[0_18px_45px_rgba(11,20,55,.08)]"><span className="font-heading text-4xl font-extrabold text-[#dbe4f3] group-hover:text-[#13b8e0]">0{index + 1}</span><p className="mt-8 font-heading text-lg font-bold leading-7 text-[#0b1437]">{problem}</p></div>)}</div></section>
 

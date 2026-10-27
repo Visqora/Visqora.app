@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuralNova Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+  /* Layout: full-bleed hero recreated from the reference video — nav bar, centred copy stack,
+     two glossy blue spheres that roam for ~2.5s then dock to top/bottom centre, ripple arcs behind. */
+  :root {
+    --bg: #f7f7f5;
+    --fg: #0d0d10;
+    --muted: #4a4a52;
+    --line: #dcdcdc;
+    --accent: #1f3fe6;
+    --accent-deep: #1430b8;
+    --sphere-blue: #2a5cff;
+    --sphere-dark: #050816;
+    --ripple: rgba(120,120,130,.32);
+    --font: "Inter", "SF Pro Display", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color-scheme: light;
+  }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background: var(--bg);
+  }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 22px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    width: min(100%, 1040px);
+    margin-inline: auto;
+    box-sizing: border-box;
+  }
+  .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--fg); }
+  .brand svg { width: 34px; height: 18px; display: block; }
+  .brand span { font-weight: 700; font-size: 14.5px; letter-spacing: -0.01em; }
+  .links { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+  .links a { color: var(--fg); text-decoration: none; font-size: 12px; font-weight: 500; opacity: .9; }
+  .links a:hover, .links a:focus-visible { opacity: 1; outline: none; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---------- ripples ---------- */
+  .ripples {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; opacity: 0; z-index: 1;
+    transition: opacity 1.2s ease;
+  }
+  .ripples.on { opacity: 1; }
+  .ripples circle { fill: none; stroke: var(--ripple); stroke-width: 7; }
+
+  /* ---------- spheres ---------- */
+  .sphere {
+    position: absolute; left: 0; top: 0;
+    width: 300px; height: 300px;
+    margin: -150px 0 0 -150px;
+    border-radius: 50%;
+    z-index: 2;
+    will-change: transform;
+    pointer-events: none;
+  }
+  .sphere::before { /* soft halo */
+    content: ""; position: absolute; inset: -14%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 55%, rgba(40,70,200,.35) 0%, rgba(40,70,200,.12) 55%, rgba(40,70,200,0) 72%);
+    filter: blur(6px);
+  }
+  .shell {
+    position: absolute; inset: 0; border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0 52%, rgba(10,20,80,.25) 60%, rgba(0,0,0,0) 70%),
+      radial-gradient(ellipse 30% 48% at 24% 42%, rgba(255,255,255,.95) 0%, rgba(255,255,255,.6) 20%, rgba(255,255,255,0) 60%),
+      radial-gradient(ellipse 18% 28% at 76% 32%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(ellipse 60% 40% at 50% 18%, rgba(110,150,255,.9) 0%, rgba(50,90,230,.55) 45%, rgba(0,0,0,0) 75%),
+      radial-gradient(ellipse 55% 45% at 50% 88%, rgba(70,120,255,.9) 0%, rgba(30,60,200,.5) 50%, rgba(0,0,0,0) 80%),
+      radial-gradient(circle at 50% 50%, #0d1a6e 0%, #0b1552 30%, #2a4ad8 55%, #0a1240 78%, #04061c 100%);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), inset 0 -18px 40px rgba(0,0,20,.6), inset 0 16px 34px rgba(90,140,255,.35);
+    overflow: hidden;
+  }
+  .shell::after { /* swirling chrome streaks */
+    content: ""; position: absolute; inset: -20%;
+    background:
+      conic-gradient(from 20deg at 50% 50%,
+        rgba(255,255,255,0) 0deg, rgba(160,200,255,.55) 28deg, rgba(0,0,0,0) 70deg,
+        rgba(5,10,40,.9) 110deg, rgba(90,140,255,.5) 160deg, rgba(0,0,0,0) 200deg,
+        rgba(0,0,20,.85) 240deg, rgba(140,180,255,.5) 290deg, rgba(0,0,0,0) 330deg, rgba(255,255,255,0) 360deg);
+    mix-blend-mode: soft-light;
+    animation: spin 14s linear infinite;
+  }
+  .core { /* the inner glass orb */
+    position: absolute; left: 24%; top: 30%; width: 50%; height: 50%;
+    border-radius: 50%;
+    background:
+      radial-gradient(ellipse 28% 40% at 28% 30%, rgba(255,255,255,.95) 0%, rgba(255,255,255,0) 60%),
+      radial-gradient(ellipse 50% 30% at 50% 90%, rgba(120,170,255,.95) 0%, rgba(60,100,240,.4) 50%, rgba(0,0,0,0) 80%),
+      radial-gradient(circle at 50% 45%, #03040f 0%, #060b2e 42%, #1e3ccf 70%, #3b63ff 86%, #a9c3ff 100%);
+    box-shadow: 0 10px 30px rgba(0,0,30,.55), inset 0 -8px 16px rgba(80,130,255,.5), inset 0 6px 14px rgba(255,255,255,.25);
+  }
+  .core::before { content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 200deg, rgba(255,255,255,0) 0deg, rgba(200,220,255,.6) 40deg, rgba(0,0,0,0) 90deg, rgba(0,0,30,.8) 150deg, rgba(150,190,255,.55) 220deg, rgba(0,0,0,0) 280deg, rgba(255,255,255,0) 360deg);
+    mix-blend-mode: soft-light; animation: spin 9s linear infinite reverse; }
+  .core::after { /* specular spark */
+    content: ""; position: absolute; left: 22%; top: 18%; width: 10%; height: 18%;
+    border-radius: 50%; background: #fff; filter: blur(.6px); opacity: .95;
+  }
+  .shell .spark { position: absolute; left: 11%; top: 38%; width: 5%; height: 11%; border-radius: 50%; background: #fff; opacity: .95; transform: rotate(-12deg); }
+  .shell .spark.b { left: 83%; top: 42%; width: 3.5%; height: 8%; opacity: .7; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- copy ---------- */
+  .copy {
+    position: relative; z-index: 4;
+    display: grid; place-content: center; justify-items: center; text-align: center;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 90px 130px;
+    gap: 0;
+  }
+  .copy > * { opacity: 0; transform: translateY(26px); filter: blur(8px); }
+  .copy.on > * { animation: rise 1s cubic-bezier(.2,.7,.2,1) forwards; }
+  .copy.on h1 { animation-delay: 0s; }
+  .copy.on p { animation-delay: .15s; }
+  .copy.on .cta { animation-delay: .3s; }
+  @keyframes rise { to { opacity: 1; transform: none; filter: blur(0); } }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(34px, 5.1vw, 50px);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.028em;
+    text-wrap: balance;
+    max-width: 24ch;
+  }
+  .copy p {
+    margin: 26px 0 0;
+    font-size: 13px; line-height: 1.55;
+    color: var(--muted);
+    max-width: 36ch;
+    text-wrap: balance;
+  }
+  .cta { display: flex; gap: 18px; margin-top: 30px; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font: 500 12.5px/1 var(--font);
+    padding: 11px 13px; border-radius: 7px;
+    text-decoration: none; cursor: pointer; letter-spacing: -0.005em;
+  }
+  .btn.primary { background: var(--accent); color: #fff; box-shadow: 0 1px 2px rgba(20,40,180,.35); }
+  .btn.primary:hover { background: var(--accent-deep); }
+  .btn.ghost { background: #fff; color: var(--fg); border: 1px solid var(--line); }
+  .btn.ghost:hover { border-color: #bdbdbd; }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn svg { width: 13px; height: 13px; }
+
+  @media (max-width: 640px) {
+    .sphere { width: 210px; height: 210px; margin: -105px 0 0 -105px; }
+    .copy { padding-block: 110px 140px; }
+    .links { gap: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shell::after, .core::before { animation: none; }
+  }
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#hero" aria-label="NeuralNova home">
+      <svg viewBox="0 0 34 18" aria-hidden="true">
+        <path d="M4 1h7l-3 16H1z" fill="#0d0d10"/>
+        <path d="M14 1h7l-3 16h-7z" fill="#0d0d10" opacity=".55"/>
+        <path d="M24 1h7l-3 16h-7z" fill="#0d0d10"/>
+        <rect x="15.2" y="7.2" width="4" height="3.6" fill="#f7f7f5" transform="skewX(-10)"/>
+      </svg>
+      <span>NeuralNova</span>
+    </a>
+    <ul class="links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#hero">About Us</a></li>
+      <li><a href="#hero">Solutions</a></li>
+      <li><a href="#hero">Contact</a></li>
+    </ul>
+  </nav>
+
+  <svg class="ripples" id="ripples" aria-hidden="true" preserveAspectRatio="none">
+    <defs>
+      <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>
+      <linearGradient id="fadeV" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+        <stop offset=".35" stop-color="#fff" stop-opacity=".15"/>
+        <stop offset=".65" stop-color="#fff" stop-opacity=".15"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="1"/>
+      </linearGradient>
+      <mask id="m"><rect width="100%" height="100%" fill="url(#fadeV)"/></mask>
+    </defs>
+    <g id="ripTop" filter="url(#soft)" mask="url(#m)"></g>
+    <g id="ripBot" filter="url(#soft)" mask="url(#m)"></g>
+  </svg>
+
+  <div class="sphere" id="sA" aria-hidden="true"><div class="shell"><i class="spark"></i><i class="spark b"></i><div class="core"></div></div></div>
+  <div class="sphere" id="sB" aria-hidden="true"><div class="shell"><i class="spark"></i><i class="spark b"></i><div class="core"></div></div></div>
+
+  <div class="copy" id="copy">
+    <h1>Revolutionizing Business Communication with AI</h1>
+    <p>NeuralNova delivers state-of-the-art natural language processing solutions to transform how businesses interact, analyze, and operate.</p>
+    <div class="cta">
+      <a class="btn primary" href="#hero">Request a Demo</a>
+      <a class="btn ghost" href="#hero">Watch a Demo
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M6.6 5.4v5.2L10.6 8z" fill="currentColor"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const hero = document.getElementById('hero');
+  const A = document.getElementById('sA'), B = document.getElementById('sB');
+  const copy = document.getElementById('copy');
+  const ripples = document.getElementById('ripples');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function size() { return { w: hero.clientWidth, h: hero.clientHeight }; }
+
+  // Concentric arcs radiating from the docked spheres (top centre / bottom centre)
+  function drawRipples() {
+    const { w, h } = size();
+    ripples.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    const mk = (g, cx, cy) => {
+      g.innerHTML = '';
+      const rMax = Math.hypot(w, h);
+      for (let r = 170; r < rMax * .75; r += 64) {
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
+        c.setAttribute('stroke-opacity', String(Math.max(0, .55 - r / rMax)));
+        g.appendChild(c);
+      }
+    };
+    mk(document.getElementById('ripTop'), w / 2, -40);
+    mk(document.getElementById('ripBot'), w / 2, h + 40);
+  }
+
+  const T = (x, y, s) => `translate(${x}px, ${y}px) scale(${s})`;
+
+  function play() {
+    const { w, h } = size();
+    const dockA = { x: w / 2, y: -0.02 * h, s: 1 };
+    const dockB = { x: w / 2, y: h + 0.02 * h, s: 1 };
+    ripples.classList.remove('on'); copy.classList.remove('on');
+
+    if (reduce) {
+      A.style.transform = T(dockA.x, dockA.y, dockA.s);
+      B.style.transform = T(dockB.x, dockB.y, dockB.s);
+      ripples.classList.add('on'); copy.classList.add('on');
+      return;
+    }
+
+    // Big sphere: starts mid-left, roams, docks at top
+    const pathA = [
+      { t: 0,    x: .38 * w, y: .52 * h, s: .45 },
+      { t: .32,  x: .33 * w, y: .60 * h, s: .60 },
+      { t: .55,  x: .42 * w, y: .72 * h, s: .80 },
+      { t: .74,  x: .22 * w, y: .78 * h, s: .95 },
+      { t: .86,  x: .44 * w, y: .40 * h, s: 1.05 },
+      { t: 1,    x: dockA.x, y: dockA.y, s: 1 },
+    ];
+    // Small sphere: starts tiny to the right, grows, docks at bottom
+    const pathB = [
+      { t: 0,    x: .53 * w, y: .49 * h, s: .07 },
+      { t: .2,   x: .76 * w, y: .14 * h, s: .35 },
+      { t: .42,  x: .60 * w, y: .74 * h, s: .70 },
+      { t: .60,  x: .78 * w, y: .36 * h, s: .95 },
+      { t: .78,  x: .66 * w, y: .20 * h, s: 1.05 },
+      { t: 1,    x: dockB.x, y: dockB.y, s: 1 },
+    ];
+    const toKF = p => p.map(k => ({ offset: k.t, transform: T(k.x, k.y, k.s), easing: 'cubic-bezier(.45,.05,.3,1)' }));
+    const dur = 3200;
+    const aA = A.animate(toKF(pathA), { duration: dur, fill: 'forwards' });
+    B.animate(toKF(pathB), { duration: dur, fill: 'forwards' });
+
+    setTimeout(() => { ripples.classList.add('on'); copy.classList.add('on'); }, dur - 700);
+
+    aA.onfinish = () => {
+      // settle: gentle breathing once docked
+      A.animate([{ transform: T(dockA.x, dockA.y, 1) }, { transform: T(dockA.x, dockA.y + 8, 1.02) }, { transform: T(dockA.x, dockA.y, 1) }],
+        { duration: 6000, iterations: Infinity, easing: 'ease-in-out' });
+      B.animate([{ transform: T(dockB.x, dockB.y, 1) }, { transform: T(dockB.x, dockB.y - 8, 1.02) }, { transform: T(dockB.x, dockB.y, 1) }],
+        { duration: 6000, iterations: Infinity, easing: 'ease-in-out', delay: 3000 });
+    };
+  }
+
+  function boot() { drawRipples(); play(); }
+  boot();
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(boot, 200); });
+  document.querySelector('.brand').addEventListener('click', e => { e.preventDefault(); boot(); });
+})();
+</script>
+</body>
+</html>
