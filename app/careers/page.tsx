@@ -1,3 +1,7 @@
 import { SiteShell, CTA } from '@/components/site'
 import { PageHero } from '@/app/pages'
+import { createPageMetadata } from '@/lib/metadata'
+
+export const metadata = createPageMetadata({ title: 'Careers', description: 'Learn about career opportunities and working with the Visqora Technologies team.', path: '/careers' })
+
 export default function Careers() { return <SiteShell><PageHero eyebrow="Careers" title="Build useful things with us." text="Our work is guided by clarity, craft and the details people feel." /><main className="mx-auto max-w-3xl px-5 py-20 lg:px-8"><div className="rounded-3xl bg-[#f7f9fc] p-8"><h2 className="text-2xl font-bold">No open roles right now</h2><p className="mt-4 leading-8 text-[#5b6478]">We are not actively hiring, but thoughtful people are welcome to introduce themselves.</p><a href="mailto:visqora@gmail.com" className="mt-6 inline-block font-bold text-[#3b58ec]">Say hello →</a></div></main><CTA title="Follow the journey" text="See what we’re building and how we think on LinkedIn." /></SiteShell> }

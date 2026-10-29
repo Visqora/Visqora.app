@@ -16,13 +16,13 @@ The site presents Visqora's services, selected work, company information, and co
 ## Requirements
 
 - Node.js 20.9 or newer
-- pnpm 12.3.4
+- pnpm 11.7.0
 
 Corepack can activate the package manager version declared in `package.json`:
 
 ```bash
 corepack enable
-corepack prepare pnpm@12.3.4 --activate
+corepack prepare pnpm@11.7.0 --activate
 ```
 
 ## Local development
@@ -87,7 +87,8 @@ postcss.config.mjs   Tailwind/PostCSS configuration
 
 ## Before production
 
-- Connect the contact form to an API, email provider, or form service. It is currently presentation-only.
-- Replace the placeholder WhatsApp number in `components/site.tsx`.
-- Review company links, legal copy, and contact details.
-- Run `pnpm build` before deployment.
+- Run `pnpm typecheck`, `pnpm build`, and `pnpm audit --prod`.
+- Connect both `visqora.app` and `www.visqora.app`; the application redirects the root domain to `www`.
+- Confirm SSL, uptime monitoring, billing alerts, and error notifications in the hosting dashboard.
+- Submit `https://www.visqora.app/sitemap.xml` to Google Search Console after deployment.
+- Verify `visqora@gmail.com`, company links, and legal copy before publishing material business changes.

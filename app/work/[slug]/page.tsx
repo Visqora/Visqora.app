@@ -3,9 +3,17 @@ import { notFound } from 'next/navigation'
 import { ArrowUpRight } from 'lucide-react'
 import { CheckList, CTA, SiteShell } from '@/components/site'
 import { getProject, projects } from '@/lib/projects'
+import { createPageMetadata } from '@/lib/metadata'
 
 export function generateStaticParams() {
   return projects.map(({ slug }) => ({ slug }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const project = getProject(slug)
+  if (!project) return {}
+  return createPageMetadata({ title: project.title, description: project.summary, path: `/work/${slug}` })
 }
 
 export default async function WorkDetail({ params }: { params: Promise<{ slug: string }> }) {

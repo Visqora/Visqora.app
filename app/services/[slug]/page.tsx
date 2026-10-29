@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { SiteShell, CTA, CheckList } from '@/components/site'
 import { PageHero } from '@/app/pages'
 import { ArrowRight, Bot, Smartphone, BarChart3, Workflow, Server } from 'lucide-react'
+import { createPageMetadata } from '@/lib/metadata'
 
 const serviceData = {
   'web-mobile-apps': { title: 'Web & mobile apps', promise: 'Products that make your next big idea real.', description: 'From a focused MVP to a mature customer portal, we design and build software that fits the way your business actually works.', icon: Smartphone, deliverables: ['Marketing websites and web apps', 'Admin panels and internal tools', 'Cross-platform mobile experiences'] },
@@ -12,6 +13,13 @@ const serviceData = {
 } as const
 
 export function generateStaticParams() { return Object.keys(serviceData).map(slug => ({ slug })) }
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const service = serviceData[slug as keyof typeof serviceData]
+  if (!service) return {}
+  return createPageMetadata({ title: service.title, description: service.description, path: `/services/${slug}` })
+}
 
 export default async function ServiceDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
