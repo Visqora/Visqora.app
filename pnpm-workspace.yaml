@@ -1,4 +1,18 @@
+packages:
+  - '.'
+
 pmOnFail: ignore
+
+supportedArchitectures:
+  os:
+    - current
+    - linux
+  cpu:
+    - current
+    - x64
+  libc:
+    - current
+    - glibc
 
 minimumReleaseAgeExclude:
   - '@next/*'
