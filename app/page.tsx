@@ -3,6 +3,13 @@ import { ArrowRight, ArrowUpRight, BarChart3, Bot, GitBranch, Radar, Server, Shi
 import { Hero } from '@/components/hero'
 import { CTA, SectionHeading, SiteShell } from '@/components/site'
 import { projects } from '@/lib/projects'
+import { createPageMetadata } from '@/lib/metadata'
+
+export const metadata = createPageMetadata({
+  title: 'Custom Software, AI & Automation',
+  description: 'Visqora turns business problems into practical software, AI solutions, analytics and workflow automation.',
+  path: '/',
+})
 
 const services = [
   { slug: 'web-mobile-apps', title: 'Web & mobile apps', short: 'Digital products people enjoy using.', icon: Smartphone },
