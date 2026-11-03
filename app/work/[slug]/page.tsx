@@ -5,7 +5,8 @@ import { Button, CheckList, CTA, SiteShell } from '@/components/site'
 import { getProject, projects } from '@/lib/projects'
 import { Asset } from '@/components/asset'
 import { TECH_LOGO } from '@/lib/tech'
-import { createPageMetadata } from '@/lib/metadata'
+import { createPageMetadata, siteUrl } from '@/lib/metadata'
+import { JsonLd, breadcrumbsJsonLd } from '@/components/json-ld'
 
 export function generateStaticParams() {
   return projects.map(({ slug }) => ({ slug }))
@@ -23,7 +24,27 @@ export default async function WorkDetail({ params }: { params: Promise<{ slug: s
   const project = getProject(slug)
   if (!project) notFound()
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CreativeWork',
+        name: project.title,
+        description: project.summary,
+        url: `${siteUrl}/work/${slug}`,
+        ...(project.liveUrl ? { sameAs: project.liveUrl } : {}),
+        creator: { '@type': 'Organization', name: 'Visqora Technologies', url: siteUrl },
+      },
+      breadcrumbsJsonLd([
+        { name: 'Home', url: siteUrl },
+        { name: 'Work', url: `${siteUrl}/work` },
+        { name: project.title, url: `${siteUrl}/work/${slug}` },
+      ]),
+    ],
+  }
+
   return <SiteShell>
+    <JsonLd data={jsonLd} />
     <section className="relative -mt-[76px] overflow-hidden bg-[#0b1437] px-5 pb-20 pt-[calc(76px+4rem)] text-white sm:pb-28 sm:pt-[calc(76px+6rem)]">
       <div aria-hidden className="hero-grain pointer-events-none absolute inset-0 opacity-30 mix-blend-overlay" />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_85%_20%,rgba(19,184,224,.22),transparent_70%),radial-gradient(40%_50%_at_5%_100%,rgba(59,88,236,.25),transparent_70%)]" />

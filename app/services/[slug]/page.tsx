@@ -3,7 +3,8 @@ import { SiteShell, CTA, Button } from '@/components/site'
 import { PageHero } from '@/app/pages'
 import { Asset, type AssetName } from '@/components/asset'
 import { getService, services } from '@/lib/services'
-import { createPageMetadata } from '@/lib/metadata'
+import { createPageMetadata, siteUrl } from '@/lib/metadata'
+import { JsonLd, breadcrumbsJsonLd } from '@/components/json-ld'
 
 const path: [string, AssetName][] = [['A focused discovery session', 'team'], ['A clear, testable first release', 'ab-test'], ['Weekly progress you can see', 'bar-growth'], ['A foundation ready to grow', 'sprout']]
 
@@ -20,7 +21,26 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
   const { slug } = await params
   const service = getService(slug)
   if (!service) notFound()
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Service',
+        name: service.title,
+        serviceType: service.title,
+        description: service.description,
+        url: `${siteUrl}/services/${slug}`,
+        provider: { '@type': 'Organization', name: 'Visqora Technologies', url: siteUrl },
+      },
+      breadcrumbsJsonLd([
+        { name: 'Home', url: siteUrl },
+        { name: 'Services', url: `${siteUrl}/services` },
+        { name: service.title, url: `${siteUrl}/services/${slug}` },
+      ]),
+    ],
+  }
   return <SiteShell>
+    <JsonLd data={jsonLd} />
     <PageHero eyebrow={service.title} asset={service.asset} title={service.promise} text={service.description}><Button href="/contact">Discuss your project</Button><Button href="/services" variant="secondary">All services</Button></PageHero>
     <main className="mx-auto max-w-7xl px-5 py-20 lg:px-8"><div className="grid items-start gap-16 lg:grid-cols-[.8fr_1.2fr]">
       <div className="glow rounded-[2rem] border-2 border-[#0b1437] bg-white p-8 shadow-[8px_8px_0_#0b1437] lg:sticky lg:top-28">

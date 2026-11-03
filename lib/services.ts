@@ -10,3 +10,8 @@ export const services: { slug: string; title: string; short: string; promise: st
 ]
 
 export const getService = (slug: string) => services.find((s) => s.slug === slug)
+
+// Slug-keyed views of the same data, used by the sitemap and the per-service OG image / JSON-LD.
+export type ServiceSlug = (typeof services)[number]['slug']
+export const serviceSlugs = services.map((s) => s.slug)
+export const serviceDetails = Object.fromEntries(services.map((s) => [s.slug, s])) as Record<string, (typeof services)[number]>
