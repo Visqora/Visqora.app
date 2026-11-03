@@ -1,5 +1,4 @@
 'use client'
-/// <reference types="react/canary" />
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -7,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { ArrowRight, ArrowUpRight, Menu, X, Mail, Sparkles, Check } from 'lucide-react'
 import { services } from '@/lib/services'
 import { Asset, type AssetName } from '@/components/asset'
-import { useEffect, useRef, useState, ViewTransition } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Motion } from '@/components/motion'
 
 export { services }
@@ -74,6 +73,6 @@ export function SectionHeading({ eyebrow, title, text, light = false }: { eyebro
 
 export function CTA({ eyebrow = 'Start a project', title = 'Have a problem\nworth solving?', text = 'Tell us what is slowing your team down. We map it, design it and ship it to the web, mobile or wherever your work happens. The first consultation is free.' }) { const [ref, inView] = useInView<HTMLElement>(); return <section ref={ref} className={`relative overflow-hidden bg-[#0b1437] text-white ${inView ? 'in' : ''}`}><div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent_70%,#0b1437),radial-gradient(55%_65%_at_82%_18%,rgba(19,184,224,.2),transparent_70%),radial-gradient(40%_50%_at_10%_75%,rgba(59,88,236,.18),transparent_70%)]" /><div className="relative mx-auto grid max-w-7xl items-center gap-6 px-5 pt-24 lg:grid-cols-[1fr_1.15fr] lg:gap-0 lg:px-8 lg:pt-28"><div className="relative z-10 pb-4 lg:pb-24"><div aria-hidden className="pointer-events-none absolute bottom-24 right-0 hidden gap-3 lg:flex">{([['video', '-rotate-6', '0s'], ['image', 'rotate-3', '-2s'], ['wifi', '-rotate-3', '-4s']] as [AssetName, string, string][]).map(([name, tilt, d]) => <span key={name} className={tilt}><span className="animate-float grid h-16 w-16 place-items-center rounded-2xl border-2 border-white bg-white shadow-[4px_4px_0_#13b8e0]" style={{ animationDelay: d }}><Asset name={name} className="h-11 w-11" /></span></span>)}</div><span className="rise inline-flex items-center gap-2 rounded-full border border-[#13b8e0]/40 bg-[#111d57] px-4 py-2 text-xs font-semibold text-[#13b8e0] shadow-[0_0_24px_rgba(19,184,224,.15)]" style={delay(0)}><Sparkles className="h-3.5 w-3.5" /> {eyebrow}</span><h2 className="mt-7 font-heading text-5xl font-extrabold leading-[1.05] sm:text-6xl lg:text-7xl">{title.split('\n').map((line, i) => <span key={line} className="block overflow-hidden pb-[.06em]"><span className="line-rise block" style={delay(.2 + i * .12)}>{line}</span></span>)}</h2><p className="rise mt-7 max-w-md text-lg leading-8 text-white/65" style={delay(.5)}>{text}</p><div className="rise mt-9" style={delay(.65)}><GlossyButton href="/contact">Book a free consultation</GlossyButton></div></div><Image src="/cta-editor.png" alt="A tilted code editor showing a widget tree and source code" width={912} height={700} sizes="(min-width: 1024px) 58vw, 100vw" className="tilt-in pointer-events-none h-auto w-full select-none mix-blend-screen [filter:hue-rotate(180deg)_saturate(1.15)] lg:-mr-[14%] lg:-mt-20 lg:w-[118%] lg:max-w-none lg:self-start" style={delay(.75)} /></div></section> }
 
-export function SiteShell({ children }: { children: React.ReactNode }) { return <><Navbar /><ViewTransition><Motion>{children}</Motion></ViewTransition><Footer /></> }
+export function SiteShell({ children }: { children: React.ReactNode }) { return <><Navbar /><Motion>{children}</Motion><Footer /></> }
 
 export const CheckList = ({ items }: { items: string[] }) => <ul className="space-y-3">{items.map(item => <li key={item} className="flex items-start gap-3 font-medium text-[#0b1437]"><span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-[#0b1437] bg-[#13b8e0]"><Check className="h-3.5 w-3.5 text-[#0b1437]" strokeWidth={3} /></span>{item}</li>)}</ul>
