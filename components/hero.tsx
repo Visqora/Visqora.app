@@ -5,10 +5,7 @@ import { ArrowRight, ArrowUpRight, BarChart3, Bot, Check, Smartphone, Zap } from
 import { Instrument_Serif } from 'next/font/google'
 import { useEffect, useRef, useState } from 'react'
 
-type Key = { t: number; x: number; y: number; s: number }
-
 const T = (x: number, y: number, s: number) => `translate(${x}px, ${y}px) scale(${s})`
-const keyframes = (path: Key[]) => path.map((k) => ({ offset: k.t, transform: T(k.x, k.y, k.s), easing: 'cubic-bezier(.45,.05,.3,1)' }))
 const DURATION = 3200
 const serif = Instrument_Serif({ subsets: ['latin'], weight: '400', style: 'italic' })
 
@@ -16,7 +13,7 @@ function Orb({ orbRef }: { orbRef: React.RefObject<HTMLDivElement | null> }) {
   return <div ref={orbRef} aria-hidden className="orb"><div className="orb-shell"><i className="orb-spark" /><i className="orb-spark orb-spark-b" /><div className="orb-core" /></div></div>
 }
 
-// Two glossy orbs roam for ~3s, then dock at top and bottom centre while the copy and ripple arcs fade in.
+// Two glossy orbs circle the centre for ~3s, then dock at top and bottom centre while the copy and ripple arcs fade in.
 export function Hero() {
   const hero = useRef<HTMLElement>(null)
   const a = useRef<HTMLDivElement>(null)
@@ -48,23 +45,16 @@ export function Hero() {
         return
       }
 
-      // Large orb starts mid-left and docks at the top; the small one grows from the right and docks at the bottom.
-      const roamA = A.animate(keyframes([
-        { t: 0, x: .38 * w, y: .52 * h, s: .45 },
-        { t: .32, x: .33 * w, y: .6 * h, s: .6 },
-        { t: .55, x: .42 * w, y: .72 * h, s: .8 },
-        { t: .74, x: .22 * w, y: .78 * h, s: .95 },
-        { t: .86, x: .44 * w, y: .4 * h, s: 1.05 },
-        { t: 1, x: dockA.x, y: dockA.y, s: 1 },
-      ]), { duration: DURATION, fill: 'forwards' })
-      B.animate(keyframes([
-        { t: 0, x: .53 * w, y: .49 * h, s: .07 },
-        { t: .2, x: .76 * w, y: .14 * h, s: .35 },
-        { t: .42, x: .6 * w, y: .74 * h, s: .7 },
-        { t: .6, x: .78 * w, y: .36 * h, s: .95 },
-        { t: .78, x: .66 * w, y: .2 * h, s: 1.05 },
-        { t: 1, x: dockB.x, y: dockB.y, s: 1 },
-      ]), { duration: DURATION, fill: 'forwards' })
+      // Both orbs ride one circle around the centre, opposite each other, growing as they go,
+      // and finish 1.5 turns later at the top (A) and bottom (B) docks.
+      const R = h / 2 - dockA.y
+      const circle = (start: number) => Array.from({ length: 73 }, (_, i) => {
+        const t = i / 72, a = start + t * 3 * Math.PI
+        return { offset: t, transform: T(w / 2 + R * Math.cos(a), h / 2 + R * Math.sin(a), .3 + .7 * t) }
+      })
+      const ease = { duration: DURATION, fill: 'forwards' as const, easing: 'cubic-bezier(.45,.05,.3,1)' }
+      const roamA = A.animate(circle(Math.PI / 2), ease)
+      B.animate(circle(-Math.PI / 2), ease)
       timer = window.setTimeout(() => setOn(true), DURATION - 700)
       roamA.onfinish = () => { breathe(A, dockA, 8, 0); breathe(B, dockB, -8, 3000) }
     }
