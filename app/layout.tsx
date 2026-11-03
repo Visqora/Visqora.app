@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { Inter, Montserrat } from 'next/font/google'
+import { JsonLd } from '@/components/json-ld'
+import { siteUrl } from '@/lib/metadata'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -16,19 +18,42 @@ export const metadata: Metadata = {
     description: 'We turn your business problems into working technology.',
     url: 'https://www.visqora.app',
     siteName: 'Visqora Technologies',
-    images: [{ url: '/visqora-hero.png', width: 1376, height: 768, alt: 'Visqora Technologies eye artwork' }],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Visqora Technologies — Vision at the Core',
     description: 'We turn your business problems into working technology.',
-    images: ['/visqora-hero.png'],
   },
+}
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'Visqora Technologies',
+      url: siteUrl,
+      logo: `${siteUrl}/visqora-logo.png`,
+      description: 'Visqora designs and builds custom software, AI solutions and automations for growing businesses.',
+      email: 'visqora@gmail.com',
+      slogan: 'Vision at the core.',
+      address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressCountry: 'IN' },
+      sameAs: ['https://linkedin.com/company/visqora-technologies', 'https://github.com/Visqora'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: 'Visqora Technologies',
+      url: siteUrl,
+      publisher: { '@id': `${siteUrl}/#organization` },
+    },
+  ],
 }
 
 export const viewport: Viewport = { themeColor: '#0b1437', colorScheme: 'light', width: 'device-width', initialScale: 1 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${inter.variable} ${montserrat.variable}`}>{children}{process.env.VERCEL === '1' && <Analytics />}</body></html>
+  return <html lang="en"><body className={`${inter.variable} ${montserrat.variable}`}><JsonLd data={organizationJsonLd} />{children}{process.env.VERCEL === '1' && <Analytics />}</body></html>
 }
