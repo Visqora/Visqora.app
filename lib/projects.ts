@@ -21,6 +21,7 @@ export const projects: Project[] = [
     solution: 'Black Box records each execution step, ranks likely causes from trace evidence and tests them through counterfactual replay. Its repair flow re-executes only affected steps, preserving trusted work and making the diagnosis inspectable.',
     tags: ['Python', 'FastAPI', 'React', 'Machine learning'],
     accent: 'orange',
+    liveUrl: 'https://blackbox-five-alpha.vercel.app/?ws=nimbu',
     outcomes: ['Step-level execution traces', 'Evidence-backed failure diagnosis', 'Counterfactual replay and verified repair'],
   },
   {
