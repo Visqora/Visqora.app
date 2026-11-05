@@ -8,7 +8,7 @@ export default function GlobalError({ retry }: { error: unknown; retry: () => vo
           <div>
             <title>Something went wrong — Visqora Technologies</title>
             <h1>Something went wrong.</h1>
-            <p>Please try loading Visqora again.</p>
+            <p>Please try loading Visqora Technologies again.</p>
             <button onClick={retry} style={{ minHeight: 44, border: 0, borderRadius: 999, padding: '12px 20px', fontWeight: 700 }}>Try again</button>
           </div>
         </main>

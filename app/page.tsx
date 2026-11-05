@@ -3,19 +3,52 @@ import { ArrowUpRight } from 'lucide-react'
 import { Asset, type AssetName } from '@/components/asset'
 import { ProductCard } from '@/components/product-visual'
 import { Hero } from '@/components/hero'
-import { CTA, SectionHeading, SiteShell } from '@/components/site'
+import { JsonLd } from '@/components/json-ld'
+import { Button, CTA, SectionHeading, SiteShell } from '@/components/site'
 import { projects } from '@/lib/projects'
 import { services } from '@/lib/services'
 import { TECH_LOGO } from '@/lib/tech'
-import { createPageMetadata } from '@/lib/metadata'
+import { createPageMetadata, siteUrl } from '@/lib/metadata'
 
 export const metadata = {
   ...createPageMetadata({
-    title: 'Visqora Technologies',
-    description: 'Visqora turns business problems into practical software, AI solutions, analytics and workflow automation.',
+    title: 'Visqora Technologies | Vision at the core',
+    description: 'Visqora Technologies builds AI-powered solutions, intelligent automation systems and modern web applications for businesses.',
     path: '/',
   }),
-  title: { absolute: 'Visqora Technologies' },
+  title: { absolute: 'Visqora Technologies | Vision at the core' },
+}
+
+const identityJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'Visqora Technologies',
+      legalName: 'Visqora Technologies',
+      url: `${siteUrl}/`,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/visqora-emblem.png`,
+        width: 474,
+        height: 527,
+      },
+      description: 'Visqora Technologies builds AI-powered business solutions, automation systems and modern web applications.',
+      email: 'visqora@gmail.com',
+      slogan: 'Vision at the core.',
+      address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressCountry: 'IN' },
+      sameAs: ['https://linkedin.com/company/visqora-technologies', 'https://github.com/Visqora'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: 'Visqora Technologies',
+      alternateName: 'visqora.app',
+      url: `${siteUrl}/`,
+      publisher: { '@id': `${siteUrl}/#organization` },
+    },
+  ],
 }
 
 const problems: [string, AssetName][] = [
@@ -74,9 +107,11 @@ function Marquee({ items, className, iconClass, speed }: { items: [string, Asset
 }
 
 export default function Home() {
-  return <SiteShell><main>
+  return <><JsonLd data={identityJsonLd} /><SiteShell><main>
     <Hero />
     <Marquee speed={26} items={capabilities} iconClass="h-11 w-11 sm:h-14 sm:w-14" className="border-y-2 border-[#0b1437] bg-[#13b8e0] py-4 font-heading text-2xl font-extrabold uppercase tracking-[-.03em] text-[#0b1437] sm:text-4xl" />
+
+    <section aria-labelledby="about-visqora" className="border-b-2 border-[#0b1437] bg-white"><div className="mx-auto grid max-w-7xl gap-10 px-5 py-20 lg:grid-cols-[1.25fr_.75fr] lg:items-end lg:px-8"><div><p className="mb-4 text-xs font-bold uppercase tracking-[.22em] text-[#3b58ec]">About Visqora Technologies</p><h2 id="about-visqora" className="max-w-4xl text-3xl font-extrabold leading-[1.05] tracking-[-.045em] text-[#0b1437] sm:text-5xl">AI solutions, web development and automation <span className="font-accent text-[#3b58ec]">built around your business.</span></h2></div><div><p className="text-lg leading-8 text-[#5b6478]">Visqora Technologies turns operational challenges into practical software, intelligent workflows and digital products teams can rely on.</p><div className="mt-7 flex flex-wrap gap-4"><Button href="/about" variant="secondary">About Visqora Technologies</Button><Button href="https://linkedin.com/company/visqora-technologies" external variant="secondary">LinkedIn</Button></div></div></div></section>
 
     <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8"><SectionHeading eyebrow="Sound familiar?" title="The hard part is not always *the technology.*" text="It is knowing what to change, where to start and who can own the outcome. That is where we come in." /><div data-stagger className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{problems.map(([problem, icon], index) => <div key={problem} className="card group flex min-h-64 flex-col rounded-3xl p-6"><div className="flex items-start justify-between"><span className="font-heading text-5xl font-extrabold tracking-[-.06em] text-[#13b8e0]">0{index + 1}</span><Asset name={icon} className="h-16 w-16 transition duration-500 group-hover:-rotate-6 group-hover:scale-110" /></div><p className="mt-auto pt-8 font-heading text-lg font-bold leading-7 text-[#0b1437]">{problem}</p></div>)}</div></section>
 
@@ -84,7 +119,7 @@ export default function Home() {
 
     <section data-glow className="glow-section relative overflow-hidden bg-[#0b1437]"><div aria-hidden className="hero-grain pointer-events-none absolute inset-0 opacity-[.35] mix-blend-overlay" /><div className="relative mx-auto max-w-7xl px-5 py-24 lg:px-8"><SectionHeading light eyebrow="How we work" title="Clear steps. *No black boxes.*" text="You stay close to the work, with honest updates and a team that owns the details." /><div aria-hidden className="mt-14 hidden h-px bg-white/10 lg:motion-safe:block"><div data-hscroll-bar className="h-full origin-left bg-[#13b8e0]" /></div><div data-hscroll className="mt-14 grid gap-8 md:grid-cols-2 lg:mt-10 lg:grid-cols-4 lg:gap-6 lg:motion-safe:flex">{steps.map(([number, title, description, icon]) => <div key={number} className="glow border-t border-white/20 pt-6 lg:motion-safe:w-[min(420px,34vw)] lg:motion-safe:shrink-0 lg:rounded-3xl lg:border lg:border-white/10 lg:bg-white/[.03] lg:p-8 lg:backdrop-blur"><div className="flex items-start justify-between"><span className="font-heading text-5xl font-extrabold tracking-[-.06em] text-[#13b8e0] lg:text-7xl">{number}</span><span className="grid h-16 w-16 place-items-center rounded-2xl bg-white shadow-[4px_4px_0_#13b8e0] lg:h-20 lg:w-20"><Asset name={icon} className="h-12 w-12 lg:h-14 lg:w-14" /></span></div><h3 className="mt-5 text-xl font-bold text-white">{title}</h3><p className="mt-3 text-sm leading-7 text-white/55">{description}</p></div>)}</div></div></section>
 
-    <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8"><div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><SectionHeading eyebrow="Visqora products" title="Products made to be *useful.*" text="Explore the products our team is actively designing, engineering and validating." /></div><div data-stagger className="mt-12 grid gap-5 md:grid-cols-2">{projects.map((product) => <ProductCard key={product.slug} product={product} heading="h3" />)}</div></section>
+    <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8"><div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end"><SectionHeading eyebrow="Visqora Technologies products" title="Products made to be *useful.*" text="Explore the products our team is actively designing, engineering and validating." /></div><div data-stagger className="mt-12 grid gap-5 md:grid-cols-2">{projects.map((product) => <ProductCard key={product.slug} product={product} heading="h3" />)}</div></section>
 
     <section className="bg-[#fff]"><div className="mx-auto max-w-7xl px-5 py-24 lg:px-8"><SectionHeading eyebrow="What we build" title="Software for *every part* of the business." text="AI, ML, CRM, ERP, chatbots, web and mobile — built around how your team actually works." /><div data-stagger className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 xl:grid-cols-5">{solutions.map(([label, icon]) => <div key={label} className="card group flex items-center gap-3 rounded-2xl p-3 sm:gap-4 sm:p-4"><span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-[#fff] transition duration-300 group-hover:-rotate-6 group-hover:bg-[#edf9fc] sm:h-16 sm:w-16"><Asset name={icon} className="h-11 w-11 sm:h-12 sm:w-12" /></span><span className="font-heading text-sm font-extrabold leading-tight tracking-[-.02em] text-[#0b1437] sm:text-base">{label}</span></div>)}</div></div></section>
 
@@ -92,5 +127,5 @@ export default function Home() {
 
     <TechStack />
     <CTA />
-  </main></SiteShell>
+  </main></SiteShell></>
 }

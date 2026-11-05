@@ -134,10 +134,10 @@ export function Hero() {
 
     <div className={`hero-copy relative z-[4] grid place-content-center justify-items-center px-5 py-[clamp(96px,17svh,150px)] text-center ${on ? 'on' : ''}`}>
       <h1 className="text-[clamp(34px,min(6vw,8.5svh),86px)] font-extrabold leading-[.95] tracking-[-.05em] text-[#0b1437]">
-        We turn your{' '}<span className="relative inline-block">messy<svg aria-hidden viewBox="0 0 200 20" preserveAspectRatio="none" className="absolute -bottom-1 left-0 h-[.18em] w-full overflow-visible"><path d="M2 12 C 40 2, 70 20, 104 9 S 168 4, 198 11" fill="none" stroke="#13b8e0" strokeWidth="6" strokeLinecap="round" className={`hero-draw ${on ? 'on' : ''}`} /></svg></span><br className="hidden sm:block" />{' '}problems into<br className="hidden sm:block" />{' '}
-        <span className="font-accent text-[#3b58ec]">working tech.</span>
+        Visqora Technologies<br className="hidden sm:block" />{' '}
+        <span className="font-accent text-[#3b58ec]">Vision at the core.</span>
       </h1>
-      <p className="mt-6 max-w-[42ch] text-base leading-7 text-[#5b6478] sm:text-lg sm:leading-8">Custom software, AI and automations for growing businesses. One clear path from the first conversation to launch day and beyond.</p>
+      <p className="mt-6 max-w-[48ch] text-base leading-7 text-[#5b6478] sm:text-lg sm:leading-8">Visqora Technologies builds custom software, AI solutions and automations for growing businesses, from the first conversation to launch day and beyond.</p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
         <Button href="/contact">Book a free consultation</Button>
         <Button href="/work" variant="secondary">See what we&apos;ve shipped</Button>

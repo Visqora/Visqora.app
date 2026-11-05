@@ -10,6 +10,6 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const project = getProject(slug)
   return renderOgImage({
     eyebrow: project ? project.label : 'Our work',
-    title: project ? project.title : 'Software and AI products by Visqora.',
+    title: project ? project.title : 'Software and AI products by Visqora Technologies.',
   })
 }

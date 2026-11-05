@@ -1,6 +1,6 @@
 import { renderOgImage, ogSize, ogContentType } from '@/lib/og-image'
 
-export const alt = 'Visqora Technologies — Vision at the Core'
+export const alt = 'Visqora Technologies — Vision at the core'
 export const size = ogSize
 export const contentType = ogContentType
 

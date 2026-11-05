@@ -13,7 +13,7 @@ export { services }
 
 function Mark({ light = false }: { light?: boolean }) { return <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${light ? 'bg-white/10' : 'bg-[#0b1437]'}`}><span className="relative h-5 w-6 rounded-[50%] border-2 border-[#13b8e0] rotate-[-25deg]"><span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#13b8e0]" /></span></span> }
 
-export function Logo({ light = false, priority = false }: { light?: boolean; priority?: boolean }) { return <Link href="/" aria-label="Visqora home" className="flex items-center gap-2.5"><Image src={light ? '/visqora-dark.png' : '/visqora-logo.png'} alt="Visqora — Vision at the Core" width={light ? 2170 : 620} height={light ? 725 : 180} sizes="170px" className="h-10 w-[150px] object-contain object-left sm:w-[170px]" priority={priority} /></Link> }
+export function Logo({ light = false, priority = false }: { light?: boolean; priority?: boolean }) { return <Link href="/" aria-label="Visqora Technologies home" className="flex items-center gap-2.5"><Image src={light ? '/visqora-dark.png' : '/visqora-logo.png'} alt="Visqora Technologies — Vision at the core" width={light ? 2170 : 620} height={light ? 725 : 180} sizes="170px" className="h-10 w-[150px] object-contain object-left sm:w-[170px]" priority={priority} /></Link> }
 
 const NAV = [['Home', '/'], ['Services', '/services'], ['Work', '/work'], ['About', '/about'], ['Contact', '/contact']] as const
 
