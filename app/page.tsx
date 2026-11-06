@@ -13,7 +13,7 @@ import { createPageMetadata, siteUrl } from '@/lib/metadata'
 export const metadata = {
   ...createPageMetadata({
     title: 'Visqora Technologies | Vision at the core',
-    description: 'Visqora Technologies builds AI-powered solutions, intelligent automation systems and modern web applications for businesses.',
+    description: 'Vision at the core. Visqora Technologies builds AI-powered solutions, custom software, web and mobile applications, and intelligent business automation systems.',
     path: '/',
   }),
   title: { absolute: 'Visqora Technologies | Vision at the core' },
@@ -34,7 +34,7 @@ const identityJsonLd = {
         width: 474,
         height: 527,
       },
-      description: 'Visqora Technologies builds AI-powered business solutions, automation systems and modern web applications.',
+      description: 'Visqora Technologies builds AI-powered solutions, custom software, modern web and mobile applications, and intelligent business automation systems.',
       email: 'visqora@gmail.com',
       slogan: 'Vision at the core.',
       address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressCountry: 'IN' },

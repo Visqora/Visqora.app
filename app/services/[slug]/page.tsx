@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const service = getService(slug)
   if (!service) return {}
-  return createPageMetadata({ title: service.title, description: service.description, path: `/services/${slug}` })
+  return createPageMetadata({ title: service.seoTitle, description: service.seoDescription, path: `/services/${slug}` })
 }
 
 export default async function ServiceDetail({ params }: { params: Promise<{ slug: string }> }) {
@@ -30,7 +30,8 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
         serviceType: service.title,
         description: service.description,
         url: `${siteUrl}/services/${slug}`,
-        provider: { '@type': 'Organization', name: 'Visqora Technologies', url: siteUrl },
+        provider: { '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Visqora Technologies', url: `${siteUrl}/` },
+        areaServed: { '@type': 'Country', name: 'India' },
       },
       breadcrumbsJsonLd([
         { name: 'Home', url: siteUrl },

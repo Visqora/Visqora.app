@@ -12,13 +12,13 @@ const serif = Instrument_Serif({ subsets: ['latin'], weight: '400', style: 'ital
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: 'Visqora Technologies | Vision at the core', template: '%s | Visqora Technologies' },
-  description: 'Visqora Technologies builds AI-powered solutions, intelligent automation systems and modern web applications for businesses.',
+  description: 'Vision at the core. Visqora Technologies builds AI-powered solutions, custom software, web and mobile applications, and intelligent business automation systems.',
   applicationName: 'Visqora Technologies',
   alternates: { canonical: '/' },
   icons: { icon: '/icon-dark-32x32.png', shortcut: '/icon-dark-32x32.png', apple: '/apple-icon.png' },
   openGraph: {
     title: 'Visqora Technologies | Vision at the core',
-    description: 'Custom software, AI solutions and automation for growing businesses.',
+    description: 'AI solutions, custom software and intelligent automation. Vision at the core.',
     url: '/',
     siteName: 'Visqora Technologies',
     type: 'website',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Visqora Technologies | Vision at the core',
-    description: 'Custom software, AI solutions and automation for growing businesses.',
+    description: 'AI solutions, custom software and intelligent automation. Vision at the core.',
   },
   robots: {
     index: true,

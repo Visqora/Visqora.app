@@ -137,12 +137,13 @@ export function Hero() {
         Visqora Technologies<br className="hidden sm:block" />{' '}
         <span className="font-accent text-[#3b58ec]">Vision at the core.</span>
       </h1>
-      <p className="mt-6 max-w-[48ch] text-base leading-7 text-[#5b6478] sm:text-lg sm:leading-8">Visqora Technologies builds custom software, AI solutions and automations for growing businesses, from the first conversation to launch day and beyond.</p>
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+      <h2 className="mt-5 font-heading text-xl font-extrabold text-[#0b1437] sm:text-2xl">Technology that moves businesses forward.</h2>
+      <p className="mt-3 max-w-[68ch] text-base leading-7 text-[#5b6478] sm:text-lg sm:leading-8">Visqora Technologies is an AI and software development company building intelligent AI solutions, custom software, web and mobile applications, and business automation systems for businesses in India and beyond.</p>
+      <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
         <Button href="/contact">Book a free consultation</Button>
         <Button href="/work" variant="secondary">See what we&apos;ve shipped</Button>
       </div>
-      <ul className="mt-6 flex [@media(max-height:860px)]:hidden flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-medium text-[#5b6478]">{['Free first call', 'No tech team needed', 'Built in the open'].map((item) => <li key={item} className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-[#13b8e0]" strokeWidth={3} />{item}</li>)}</ul>
+      <ul className="mt-6 flex [@media(max-height:860px)]:hidden flex-wrap justify-center gap-2 text-xs font-bold text-[#0b1437]">{['AI solutions', 'Software development', 'Automation'].map((item) => <li key={item} className="flex items-center gap-1.5 rounded-full border border-[#0b1437]/15 bg-white/70 px-3 py-1.5"><Check className="h-3.5 w-3.5 text-[#13b8e0]" strokeWidth={3} />{item}</li>)}</ul>
     </div>
   </section>
 }

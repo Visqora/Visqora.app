@@ -51,7 +51,7 @@ const VALUES: [string, string, AssetName][] = [['Clarity', 'Say what matters, si
 
 export function AboutPage() {
   return <SiteShell>
-    <PageHero eyebrow="About Visqora Technologies" title="See the real problem first. *Then build around it.*" text="Visqora Technologies helps growing businesses solve real problems with thoughtful technology." />
+    <PageHero eyebrow="About Visqora Technologies" title="Vision at the *core.*" text="Visqora Technologies is a Mumbai-based AI and software development company building intelligent solutions, custom applications and business automation for organizations in India and beyond." />
     <section className="mx-auto grid max-w-7xl items-start gap-16 px-5 py-24 lg:grid-cols-2 lg:px-8">
       <div className="lg:sticky lg:top-28"><SectionHeading eyebrow="Why we exist" title="Good technology should make work *feel lighter.*" text="Businesses deserve a partner who understands the workflow before reaching for a tool. We stay close to the people doing the work, own the outcome end to end and make every decision easy to understand." /></div>
       <div className="glow relative overflow-hidden rounded-[2rem] border-2 border-[#0b1437] bg-[#0b1437] p-8 text-white shadow-[8px_8px_0_#13b8e0] sm:p-12">
